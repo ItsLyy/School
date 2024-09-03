@@ -26,9 +26,9 @@ import javax.swing.JTextField;
  * @author itsly
  */
 public class TransaksiUtill {
-    String judulKolom[] = {"No", "ID Detail", "ID Pinjam", "Kode Film", "Tanggal Pinjam", "Tanggal Kembali", "Status", "Keterangan", "Denda"};
-    String sqlView = "SELECT * FROM view_pinjam ORDER BY id_pinjam DESC";
-    int lebarKolom[] = {70, 120, 120, 250, 110, 200, 120, 120, 120};
+    String judulKolom[] = {"No", "Kode Film", "ID Pinjam", "Tanggal Pinjam", "Tanggal Kembali", "Status", "Keterangan", "Denda"};
+    String sqlView = "SELECT * FROM tb_detail_pinjam ORDER BY id_pinjam DESC";
+    int lebarKolom[] = {70, 120, 250, 110, 200, 120, 120, 120};
     DefaultTableModel list;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -72,6 +72,11 @@ public class TransaksiUtill {
         this.iDendaTransaksi = iDendaTransaksi;
         this.lIdDetailTransaksi = lIdDetailTransaksi;
         this.iSearch = iSearch;
+    }
+    
+    public void tampilTabelTransaksi() {        
+        new ConfigDB().tampilData(judulKolom, sqlView, this.tableDisplayFirst);
+        new ConfigDB().aturLebarKolom(this.tableDisplayFirst, lebarKolom);
         
         list = new DefaultTableModel();
         tableDisplaySecond.setModel(list);
@@ -79,11 +84,6 @@ public class TransaksiUtill {
         list.addColumn("Nama Anggota");
         list.addColumn("Kode Film");
         list.addColumn("Judul");
-    }
-    
-    public void tampilTabelTransaksi() {        
-        new ConfigDB().tampilData(judulKolom, sqlView, this.tableDisplayFirst);
-        new ConfigDB().aturLebarKolom(this.tableDisplayFirst, lebarKolom);
     }
     
     public void clearInputTransaksi() {
@@ -104,24 +104,29 @@ public class TransaksiUtill {
     }
     
     public void cariIdPeminjaman() {
-        String SQL = "SELECT * FROM detail_pinjam WHERE id_pinjam = '" + this.iIdPinjamTransaksi.getText() + "'";
+        String SQL = "SELECT * FROM tb_detail_pinjam WHERE id_pinjam = '" + this.iIdPinjamTransaksi.getText() + "'";
         new ConfigDB().cariData(this.judulKolom, SQL, this.tableDisplayFirst);
         new ConfigDB().aturLebarKolom(this.tableDisplayFirst, this.lebarKolom);
     }
     
     public void cariTunggakan() {
-        String SQL = "SELECT * FROM view_pinjam WHERE id_anggota = '" + iIdAnggotaTransaksi.getText() + "' AND status = 'Belum Dikembalikan'";
+        String SQL = "SELECT * FROM view_pinjam WHERE id_anggota = '" + iIdAnggotaTransaksi.getText() + "' AND status = '0'";
         int jumlah = new ConfigDB().jumlahRecord(SQL);
         if (jumlah == 0) {
             JOptionPane.showMessageDialog(null, "Tidak ada tunggakan Film  yang belum dikembalikan");
         } else {
-            JOptionPane.showMessageDialog(null, "Ada" + String.valueOf(jumlah) + "tunggakan Film yang belum dikembalikan");
+            JOptionPane.showMessageDialog(null, "Ada " + String.valueOf(jumlah) + " tunggakan Film yang belum dikembalikan");
         }
     }
     
     public void tambahListItemPinjam() {
         try {
-            String isi[] = {iIdAnggotaTransaksi.getText(), iNamaAnggotaTransaksi.getText(), iIdFilmTransaksi.getText(), iFilmTransaksi.getText()};
+            // Opsional Tapi Memudahkan
+            String SQLAnggota = "SELECT nama FROM tb_anggota WHERE id_anggota = '" + iIdAnggotaTransaksi.getText() + "'";
+            String SQLFilm = "SELECT judul FROM tb_film WHERE kode_film = '" + iIdFilmTransaksi.getText() + "'";
+            String namaAnggota = new ConfigDB().ambilData(SQLAnggota, "nama");
+            String judulFilm = new ConfigDB().ambilData(SQLFilm, "judul");
+            String isi[] = {iIdAnggotaTransaksi.getText(), namaAnggota, iIdFilmTransaksi.getText(), judulFilm};
             list.addRow(isi);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
@@ -148,17 +153,6 @@ public class TransaksiUtill {
                 return;
             }
             
-            if (this.iNamaAnggotaTransaksi.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nama anggota belum terisi");
-                this.iNamaAnggotaTransaksi.requestFocus();
-                return;
-            }
-            if (this.iFilmTransaksi.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Film belum terisi");
-                this.iFilmTransaksi.requestFocus();
-                return;
-            }
-            
             if (this.iKeteranganTransaksi.getSelectedItem() == ".:Pilih Data:.") {
                 JOptionPane.showMessageDialog(null, "keterangan belum dipilih");
                 this.iKeteranganTransaksi.requestFocus();
@@ -166,7 +160,7 @@ public class TransaksiUtill {
             }
             
             if (this.iDendaTransaksi.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "keterangan belum dipilih");
+                JOptionPane.showMessageDialog(null, "Denda belum dipilih");
                 this.iKeteranganTransaksi.requestFocus();
                 return;
             }
@@ -176,14 +170,13 @@ public class TransaksiUtill {
                 return;
             }
             
-            // BELUM
             String SQLPinjam = "INSERT INTO tb_pinjam VALUES('" + iIdPinjamTransaksi.getText() + "', '" + iIdAnggotaTransaksi.getText() + "', 0)";
             new ConfigDB().simpanData(SQLPinjam);
             int jumlah = tableDisplaySecond.getRowCount();
             for (int i = 0; i < jumlah; i++) {
                 String tglPinjam = sdf.format(this.iTanggalPinjamTransaksi.getDate());
                 String tglKembali = sdf.format(this.iTanggalKembaliTransaksi.getDate());
-                String SQLDetail = "INSERT INTO tb_detail_pinjam VALUES(null, '" + String.valueOf(tableDisplaySecond.getValueAt(i,2)) + "', '" + tglPinjam + "', '" + tglKembali + "', '0', '" + String.valueOf(iKeteranganTransaksi.getSelectedItem()) + "', 0, '" + iIdPinjamTransaksi.getText() + "')";
+                String SQLDetail = "INSERT INTO tb_detail_pinjam VALUES(NULL, '" + String.valueOf(tableDisplaySecond.getValueAt(i,2)) + "', '" + iIdPinjamTransaksi.getText() + "', '" + tglPinjam + "', '" + tglKembali + "', '0', '" + String.valueOf(iKeteranganTransaksi.getSelectedItem()) + "', 0)";
                 new ConfigDB().simpanData(SQLDetail);
             }
             this.tampilTabelTransaksi();
@@ -198,43 +191,53 @@ public class TransaksiUtill {
             String tglKembali = sdf.format(this.iTanggalKembaliTransaksi.getDate());
             if( this.iKeteranganTransaksi.getSelectedItem() == "Kembali") {
                 String SQLFirst = "UPDATE tb_detail_pinjam SET id_pinjam = '" + iIdPinjamTransaksi.getText() + "', kode_film = '" + iIdFilmTransaksi.getText() + "', tgl_pinjam='" + tglPinjam + "', tgl_kembali='" + tglKembali + "', status='1', keterangan='" + iKeteranganTransaksi.getSelectedItem() + "', denda='" + iDendaTransaksi.getText() + "' WHERE id_detail_pinjam = '" + lIdDetailTransaksi.getText() + "'";
+                System.out.println("sad");
                 new ConfigDB().ubahData(SQLFirst);
             } else {
                 String SQLSecond = "UPDATE tb_detail_pinjam SET id_pinjam = '" + iIdPinjamTransaksi.getText() + "', kode_film = '" + iIdFilmTransaksi.getText() + "', tgl_pinjam='" + tglPinjam + "', tgl_kembali='" + tglKembali + "', status='0', keterangan='" + iKeteranganTransaksi.getSelectedItem() + "', denda='" + iDendaTransaksi.getText() + "' WHERE id_detail_pinjam = '" + lIdDetailTransaksi.getText() + "'";
                 new ConfigDB().ubahData(SQLSecond);
             }
+            tampilTabelTransaksi();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian Simpan Data : \n [" + e.toString() + "]");
         }
     }
    
+    public void refreshEvent() {
+        new ConfigDB().tampilData(judulKolom, sqlView, this.tableDisplayFirst);
+        new ConfigDB().aturLebarKolom(this.tableDisplayFirst, lebarKolom);
+    }
+    
     public void mouseClickTransaksi(int baris) throws SQLException {
-        this.iIdPinjamTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 1)));
-        this.iIdFilmTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 2)));
+        this.iIdFilmTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 1)));
+        this.iIdPinjamTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 2)));
         this.iKeteranganTransaksi.setSelectedItem(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 6)));
         try {
             this.iTanggalPinjamTransaksi.setDate(sdf.parse(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 3))));
-            this.iTanggalPinjamTransaksi.setDate(sdf.parse(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 4))));
+            this.iTanggalKembaliTransaksi.setDate(sdf.parse(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 4))));
         } catch (ParseException ex) {
             Logger.getLogger(TransaksiUtill.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.iDendaTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 7)));
         
         Statement st = new ConfigDB().cn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM tb_pinjam WHERE id_pinjam='" + iIdPinjamTransaksi.getText() + "'");
+        ResultSet rs = st.executeQuery("SELECT * FROM tb_pinjam WHERE id_pinjam ='" + iIdPinjamTransaksi.getText() + "'");
         
         if(rs.next()) {
             iIdAnggotaTransaksi.setText(rs.getString("id_anggota"));
         }
         
         ResultSet ra = st.executeQuery("SELECT * FROM tb_anggota WHERE id_anggota='" + iIdAnggotaTransaksi.getText() + "'");
-        if(rs.next()) {
+        if(ra.next()) {
             iNamaAnggotaTransaksi.setText(ra.getString("nama"));
         }
         
-        ResultSet rf = st.executeQuery("SELECT * FROM tb_film WHERE id_film='" + iIdFilmTransaksi.getText() + "'");
-        if(rs.next()) {
+        ResultSet rf = st.executeQuery("SELECT * FROM tb_film WHERE kode_film='" + iIdFilmTransaksi.getText() + "'");
+        if(rf.next()) {
             iFilmTransaksi.setText(rf.getString("judul"));
         }
+        
+        lIdDetailTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 0)));
     }
    
 }

@@ -158,6 +158,7 @@ public class ConfigDB {
     public void tampilLaporan(String laporanFile, String SQL){
         try {
             File file = new File(laporanFile);
+            System.out.println(file);
             JasperDesign jasDes = JRXmlLoader.load(file);
             JRDesignQuery sqlQuery = new JRDesignQuery();
             sqlQuery.setText(SQL);
@@ -179,6 +180,20 @@ public class ConfigDB {
             while(rs.next()) {
                 i++;
                 hasil = i;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian : \n [" + e.toString() + "]");
+        }
+        return hasil;
+    }
+    
+    public String ambilData(String SQL, String value) {
+        String hasil = "";
+        try {
+            Statement st = ConfigDB.this.cn.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+            while(rs.next()) {
+                hasil = rs.getString(value);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian : \n [" + e.toString() + "]");

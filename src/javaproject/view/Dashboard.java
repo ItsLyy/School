@@ -32,7 +32,7 @@ public class Dashboard extends javax.swing.JFrame {
         
         film = new FilmUtill(tableDisplay, iKodeFilm, iJudulFilm, iGenreFilm, iAsalFilm, iStokFilm, iTahunFilm, iSearch);
         anggota = new AnggotaUtill(tableDisplay, iIdAnggota, iNamaAnggota, iTempatLahirAnggota, iTanggalLahirAnggota, iKelaminAnggota, iStatusAnggota, iAlamatAnggota, iNomorTeleponAnggota, iSearch);
-        transaksi = new TransaksiUtill(tableDisplay, tableDisplay1, iIdAnggotaTransaksi, iIdFilmTransaksi, iIdPinjamTransaksi, iNamaAnggotaTransaksi, iJudulFilmTransaksi, iTanggalPinjamTransaksi, iTanggalKembaliTransaksi, iDendaTransaksi, lIdDetailTransaksi, iSearch);
+        transaksi = new TransaksiUtill(tableDisplay, tableDisplay1, iIdAnggotaTransaksi, iIdFilmTransaksi, iIdPinjamTransaksi, iNamaAnggotaTransaksi, iJudulFilmTransaksi, iKeteranganTransaksi, iTanggalPinjamTransaksi, iTanggalKembaliTransaksi, lIdDetailTransaksi, iDendaTransaksi, iSearch);
         
         choosePage(page);
     }
@@ -57,6 +57,8 @@ public class Dashboard extends javax.swing.JFrame {
             AnggotaMaster.setVisible(false);
             TransaksiMaster.setVisible(true);
             container2.setVisible(true);
+            
+            transaksi.tampilTabelTransaksi();
         }
     }
     
@@ -124,9 +126,9 @@ public class Dashboard extends javax.swing.JFrame {
         TransaksiMaster = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         iIdAnggotaTransaksi = new javax.swing.JTextField();
-        iEditTransaksi = new javax.swing.JButton();
+        iPinjamTransaksi = new javax.swing.JButton();
         btnTambahTransaksi = new javax.swing.JButton();
-        iHapusTransaksi = new javax.swing.JButton();
+        iKembaliTransaksi = new javax.swing.JButton();
         iIdPinjamTransaksi = new javax.swing.JTextField();
         btnCariTunggakan = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -151,17 +153,18 @@ public class Dashboard extends javax.swing.JFrame {
         iDendaTransaksi = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         lIdDetailTransaksi = new javax.swing.JLabel();
-        clearInputTransaksi = new javax.swing.JButton();
         container2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDisplay1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        btnClearInputTransaksi = new javax.swing.JButton();
+        clearInputTransaksi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnFilmPage = new javax.swing.JButton();
         btnAnggotaPage = new javax.swing.JButton();
         btnTransaksiPage = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -333,29 +336,27 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FilmMasterLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(iStokFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iAsalFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iTahunFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iGenreFilm, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(FilmMasterLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(298, 298, 298))
-                            .addGroup(FilmMasterLayout.createSequentialGroup()
-                                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(iStokFilm, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iAsalFilm, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iTahunFilm, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iGenreFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(iKodeFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
+                                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(FilmMasterLayout.createSequentialGroup()
-                                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(iKodeFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel11))
-                                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(FilmMasterLayout.createSequentialGroup()
-                                                .addGap(14, 14, 14)
-                                                .addComponent(jLabel12))
-                                            .addGroup(FilmMasterLayout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(iJudulFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(btnClearInputFilm))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jLabel12))
+                                    .addGroup(FilmMasterLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(iJudulFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FilmMasterLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnClearInputFilm)))
+                        .addContainerGap())
                     .addGroup(FilmMasterLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,10 +381,10 @@ public class Dashboard extends javax.swing.JFrame {
             FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FilmMasterLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(btnClearInputFilm))
-                .addGap(12, 12, 12)
+                .addGap(14, 14, 14)
                 .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel12))
@@ -624,14 +625,14 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        iEditTransaksi.setBackground(new java.awt.Color(0, 51, 255));
-        iEditTransaksi.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        iEditTransaksi.setForeground(new java.awt.Color(255, 255, 255));
-        iEditTransaksi.setText("EDIT");
-        iEditTransaksi.setBorder(null);
-        iEditTransaksi.addActionListener(new java.awt.event.ActionListener() {
+        iPinjamTransaksi.setBackground(new java.awt.Color(0, 51, 255));
+        iPinjamTransaksi.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        iPinjamTransaksi.setForeground(new java.awt.Color(255, 255, 255));
+        iPinjamTransaksi.setText("PINJAM");
+        iPinjamTransaksi.setBorder(null);
+        iPinjamTransaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                iEditTransaksiActionPerformed(evt);
+                iPinjamTransaksiActionPerformed(evt);
             }
         });
 
@@ -646,11 +647,16 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        iHapusTransaksi.setBackground(new java.awt.Color(255, 0, 0));
-        iHapusTransaksi.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        iHapusTransaksi.setForeground(new java.awt.Color(255, 255, 255));
-        iHapusTransaksi.setText("HAPUS");
-        iHapusTransaksi.setBorder(null);
+        iKembaliTransaksi.setBackground(new java.awt.Color(255, 0, 0));
+        iKembaliTransaksi.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        iKembaliTransaksi.setForeground(new java.awt.Color(255, 255, 255));
+        iKembaliTransaksi.setText("KEMBALI/PERPANJANG");
+        iKembaliTransaksi.setBorder(null);
+        iKembaliTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iKembaliTransaksiActionPerformed(evt);
+            }
+        });
 
         iIdPinjamTransaksi.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         iIdPinjamTransaksi.setForeground(new java.awt.Color(204, 204, 204));
@@ -660,12 +666,22 @@ public class Dashboard extends javax.swing.JFrame {
                 iIdPinjamTransaksiActionPerformed(evt);
             }
         });
+        iIdPinjamTransaksi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                iIdPinjamTransaksiKeyPressed(evt);
+            }
+        });
 
         btnCariTunggakan.setBackground(new java.awt.Color(153, 153, 0));
         btnCariTunggakan.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
         btnCariTunggakan.setForeground(new java.awt.Color(255, 255, 255));
         btnCariTunggakan.setText("CARI TUNGGAKAN");
         btnCariTunggakan.setBorder(null);
+        btnCariTunggakan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariTunggakanActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("ID Pinjam");
 
@@ -719,53 +735,50 @@ public class Dashboard extends javax.swing.JFrame {
 
         lIdDetailTransaksi.setText("ID Detail");
 
-        clearInputTransaksi.setText("Clear");
-
         javax.swing.GroupLayout TransaksiMasterLayout = new javax.swing.GroupLayout(TransaksiMaster);
         TransaksiMaster.setLayout(TransaksiMasterLayout);
         TransaksiMasterLayout.setHorizontalGroup(
             TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(23, 23, 23)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                        .addComponent(iHapusTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iEditTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel30)
-                        .addComponent(jLabel27)
-                        .addComponent(jLabel28)
-                        .addComponent(jLabel26)
-                        .addComponent(jLabel25)
+                    .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel25)
+                            .addComponent(iKeteranganTransaksi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(iTanggalPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(iTanggalKembaliTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(iNamaAnggotaTransaksi)
+                            .addComponent(iJudulFilmTransaksi)
+                            .addGroup(TransaksiMasterLayout.createSequentialGroup()
+                                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(iIdPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(iIdAnggotaTransaksi))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCariTunggakan, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel29)
+                                        .addComponent(iIdFilmTransaksi))))
+                            .addComponent(iDendaTransaksi))
                         .addGroup(TransaksiMasterLayout.createSequentialGroup()
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lIdDetailTransaksi)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                            .addComponent(clearInputTransaksi))
-                        .addComponent(iKeteranganTransaksi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel10)
-                        .addComponent(iTanggalPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(iTanggalKembaliTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(iNamaAnggotaTransaksi)
-                        .addComponent(iJudulFilmTransaksi)
-                        .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                            .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(iIdPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addComponent(iIdAnggotaTransaksi))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnCariTunggakan, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel29)
-                                    .addComponent(iIdFilmTransaksi))))
-                        .addComponent(iDendaTransaksi)))
-                .addGap(0, 102, Short.MAX_VALUE))
+                            .addComponent(lIdDetailTransaksi)))
+                    .addGroup(TransaksiMasterLayout.createSequentialGroup()
+                        .addComponent(iKembaliTransaksi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iPinjamTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         TransaksiMasterLayout.setVerticalGroup(
             TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -773,9 +786,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(lIdDetailTransaksi)
-                    .addComponent(clearInputTransaksi))
-                .addGap(9, 9, 9)
+                    .addComponent(lIdDetailTransaksi))
+                .addGap(11, 11, 11)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel29))
@@ -815,9 +827,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(iDendaTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(iEditTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iPinjamTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iHapusTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(iKembaliTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48))
         );
 
@@ -856,20 +868,54 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableDisplay1);
 
+        jButton1.setText("REFRESH");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnClearInputTransaksi.setText("CLEAR");
+        btnClearInputTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearInputTransaksiActionPerformed(evt);
+            }
+        });
+
+        clearInputTransaksi.setText("VIEW");
+        clearInputTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearInputTransaksiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout container2Layout = new javax.swing.GroupLayout(container2);
         container2.setLayout(container2Layout);
         container2Layout.setHorizontalGroup(
             container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container2Layout.createSequentialGroup()
+            .addGroup(container2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+                .addGroup(container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClearInputTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clearInputTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1064, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         container2Layout.setVerticalGroup(
             container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(container2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container2Layout.createSequentialGroup()
+                        .addComponent(clearInputTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClearInputTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -930,11 +976,19 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("REPORT");
 
-        jButton4.setText("FILM");
-
         jButton5.setText("ANGGOTA");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("TRANSAKSI");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -948,7 +1002,6 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(btnAnggotaPage, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                     .addComponent(btnTransaksiPage, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                     .addComponent(jLabel3)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -966,13 +1019,11 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnTransaksiPage)
                 .addGap(51, 51, 51)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addContainerGap(484, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 820));
@@ -1046,9 +1097,9 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_iIdAnggotaTransaksiActionPerformed
 
-    private void iEditTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iEditTransaksiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_iEditTransaksiActionPerformed
+    private void iPinjamTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iPinjamTransaksiActionPerformed
+        transaksi.simpanDataPinjam();
+    }//GEN-LAST:event_iPinjamTransaksiActionPerformed
 
     private void iIdPinjamTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iIdPinjamTransaksiActionPerformed
         // TODO add your handling code here:
@@ -1062,9 +1113,9 @@ public class Dashboard extends javax.swing.JFrame {
         film.simpanDataFilm();
     }//GEN-LAST:event_btnSimpanFilmActionPerformed
 
-    private void btnClearInputFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearInputFilmActionPerformed
-        film.clearInputFilm();
-    }//GEN-LAST:event_btnClearInputFilmActionPerformed
+    private void btnClearInputTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearInputTransaksiActionPerformed
+        transaksi.clearInputTransaksi();
+    }//GEN-LAST:event_btnClearInputTransaksiActionPerformed
 
     private void btnHapusFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusFilmActionPerformed
         film.hapusDataFilm();
@@ -1082,6 +1133,8 @@ public class Dashboard extends javax.swing.JFrame {
                 film.mouseClickFilm(baris);
             } else if (page == 2) {
                 anggota.mouseClickAnggota(baris);
+            } else if (page == 3) {
+                transaksi.mouseClickTransaksi(baris);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian : \n [" + e.toString() + "]");
@@ -1117,8 +1170,40 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_iIdFilmTransaksiActionPerformed
 
     private void btnTambahTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahTransaksiActionPerformed
-        // TODO add your handling code here:
+        transaksi.tambahListItemPinjam();
     }//GEN-LAST:event_btnTambahTransaksiActionPerformed
+
+    private void iIdPinjamTransaksiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iIdPinjamTransaksiKeyPressed
+        transaksi.cariIdPeminjaman();
+    }//GEN-LAST:event_iIdPinjamTransaksiKeyPressed
+
+    private void btnCariTunggakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariTunggakanActionPerformed
+        transaksi.cariTunggakan();
+    }//GEN-LAST:event_btnCariTunggakanActionPerformed
+
+    private void iKembaliTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iKembaliTransaksiActionPerformed
+        transaksi.prosesPeminjaman();
+    }//GEN-LAST:event_iKembaliTransaksiActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        transaksi.refreshEvent();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void clearInputTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearInputTransaksiActionPerformed
+        new FormView().setVisible(true);
+    }//GEN-LAST:event_clearInputTransaksiActionPerformed
+
+    private void btnClearInputFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearInputFilmActionPerformed
+        film.clearInputFilm();
+    }//GEN-LAST:event_btnClearInputFilmActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        new laporanAnggota().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        new laporanPinjam().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1165,6 +1250,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnCariTunggakan;
     private javax.swing.JButton btnClearAnggota;
     private javax.swing.JButton btnClearInputFilm;
+    private javax.swing.JButton btnClearInputTransaksi;
     private javax.swing.JButton btnEditAnggota;
     private javax.swing.JButton btnEditFilm;
     private javax.swing.JButton btnFilmPage;
@@ -1180,9 +1266,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField iAlamatAnggota;
     private javax.swing.JTextField iAsalFilm;
     private javax.swing.JTextField iDendaTransaksi;
-    private javax.swing.JButton iEditTransaksi;
     private javax.swing.JTextField iGenreFilm;
-    private javax.swing.JButton iHapusTransaksi;
     private javax.swing.JTextField iIdAnggota;
     private javax.swing.JTextField iIdAnggotaTransaksi;
     private javax.swing.JTextField iIdFilmTransaksi;
@@ -1190,11 +1274,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField iJudulFilm;
     private javax.swing.JTextField iJudulFilmTransaksi;
     private javax.swing.JComboBox<String> iKelaminAnggota;
+    private javax.swing.JButton iKembaliTransaksi;
     private javax.swing.JComboBox<String> iKeteranganTransaksi;
     private javax.swing.JTextField iKodeFilm;
     private javax.swing.JTextField iNamaAnggota;
     private javax.swing.JTextField iNamaAnggotaTransaksi;
     private javax.swing.JTextField iNomorTeleponAnggota;
+    private javax.swing.JButton iPinjamTransaksi;
     private javax.swing.JTextField iSearch;
     private javax.swing.JComboBox<String> iStatusAnggota;
     private javax.swing.JTextField iStokFilm;
@@ -1203,7 +1289,7 @@ public class Dashboard extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser iTanggalLahirAnggota;
     private com.toedter.calendar.JDateChooser iTanggalPinjamTransaksi;
     private javax.swing.JTextField iTempatLahirAnggota;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox5;
