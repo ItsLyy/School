@@ -23,6 +23,7 @@ public class Dashboard extends javax.swing.JFrame {
     // Membuat Class dimana semua method tersimpan sesuai dengan page yang diperlukan
     FilmUtill film;
     AnggotaUtill anggota;
+    TransaksiUtill transaksi;
     
     int page = 1;
     
@@ -31,6 +32,7 @@ public class Dashboard extends javax.swing.JFrame {
         
         film = new FilmUtill(tableDisplay, iKodeFilm, iJudulFilm, iGenreFilm, iAsalFilm, iStokFilm, iTahunFilm, iSearch);
         anggota = new AnggotaUtill(tableDisplay, iIdAnggota, iNamaAnggota, iTempatLahirAnggota, iTanggalLahirAnggota, iKelaminAnggota, iStatusAnggota, iAlamatAnggota, iNomorTeleponAnggota, iSearch);
+        transaksi = new TransaksiUtill(tableDisplay, tableDisplay1, iIdAnggotaTransaksi, iIdFilmTransaksi, iIdPinjamTransaksi, iNamaAnggotaTransaksi, iJudulFilmTransaksi, iTanggalPinjamTransaksi, iTanggalKembaliTransaksi, iDendaTransaksi, lIdDetailTransaksi, iSearch);
         
         choosePage(page);
     }
@@ -40,18 +42,21 @@ public class Dashboard extends javax.swing.JFrame {
             FilmMaster.setVisible(true);
             AnggotaMaster.setVisible(false);
             TransaksiMaster.setVisible(false);
+            container2.setVisible(false);
             
             film.tampilTabelFilm();
         } else if (page == 2) {
             FilmMaster.setVisible(false);
             AnggotaMaster.setVisible(true);
             TransaksiMaster.setVisible(false);
-            
+            container2.setVisible(false);
+
             anggota.tampilTabelAnggota();
         } else if (page == 3) {
             FilmMaster.setVisible(false);
             AnggotaMaster.setVisible(false);
             TransaksiMaster.setVisible(true);
+            container2.setVisible(true);
         }
     }
     
@@ -140,10 +145,14 @@ public class Dashboard extends javax.swing.JFrame {
         iTanggalKembaliTransaksi = new com.toedter.calendar.JDateChooser();
         iTanggalPinjamTransaksi = new com.toedter.calendar.JDateChooser();
         iNamaAnggotaTransaksi = new javax.swing.JTextField();
-        iFilmTransaksi = new javax.swing.JTextField();
+        iJudulFilmTransaksi = new javax.swing.JTextField();
         iIdFilmTransaksi = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        iDendaTransaksi = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        lIdDetailTransaksi = new javax.swing.JLabel();
+        clearInputTransaksi = new javax.swing.JButton();
+        container2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDisplay1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -186,7 +195,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableDisplay);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 43, 714, 480));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 714, 540));
 
         iSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,41 +329,35 @@ public class Dashboard extends javax.swing.JFrame {
         FilmMasterLayout.setHorizontalGroup(
             FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FilmMasterLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FilmMasterLayout.createSequentialGroup()
-                        .addGap(0, 8, Short.MAX_VALUE)
+                        .addGap(9, 9, 9)
                         .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(FilmMasterLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(234, 234, 234)
-                                .addComponent(btnClearInputFilm))
+                                .addGap(298, 298, 298))
                             .addGroup(FilmMasterLayout.createSequentialGroup()
-                                .addComponent(btnHapusFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSimpanFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(iStokFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(iAsalFilm, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(iGenreFilm, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(FilmMasterLayout.createSequentialGroup()
-                                    .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(iKodeFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(FilmMasterLayout.createSequentialGroup()
-                                            .addGap(6, 6, 6)
-                                            .addComponent(jLabel11)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(iJudulFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(FilmMasterLayout.createSequentialGroup()
-                                            .addGap(8, 8, 8)
-                                            .addComponent(jLabel12))))
-                                .addComponent(iTahunFilm, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addContainerGap(20, Short.MAX_VALUE))
+                                .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(iStokFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(iAsalFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(iTahunFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(iGenreFilm, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(FilmMasterLayout.createSequentialGroup()
+                                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(iKodeFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel11))
+                                        .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(FilmMasterLayout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(jLabel12))
+                                            .addGroup(FilmMasterLayout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(iJudulFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnClearInputFilm))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(FilmMasterLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(7, 7, 7)
                         .addGroup(FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(FilmMasterLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
@@ -364,7 +367,14 @@ public class Dashboard extends javax.swing.JFrame {
                                     .addComponent(jLabel16)
                                     .addComponent(jLabel14)
                                     .addComponent(jLabel15))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FilmMasterLayout.createSequentialGroup()
+                        .addComponent(btnHapusFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEditFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSimpanFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))))
         );
         FilmMasterLayout.setVerticalGroup(
             FilmMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,42 +530,39 @@ public class Dashboard extends javax.swing.JFrame {
             AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AnggotaMasterLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(AnggotaMasterLayout.createSequentialGroup()
-                        .addGap(0, 149, Short.MAX_VALUE)
                         .addComponent(btnHapusAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTambahAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))
-                    .addGroup(AnggotaMasterLayout.createSequentialGroup()
-                        .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(iNomorTeleponAnggota)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel22)
-                            .addComponent(iStatusAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(iAlamatAnggota)
-                            .addComponent(iKelaminAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel19)
-                            .addComponent(iTempatLahirAnggota)
-                            .addGroup(AnggotaMasterLayout.createSequentialGroup()
-                                .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iIdAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel17))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel18)
-                                    .addComponent(iNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(AnggotaMasterLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnClearAnggota))
-                            .addComponent(iTanggalLahirAnggota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btnTambahAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(iNomorTeleponAnggota)
+                        .addComponent(jLabel24)
+                        .addComponent(jLabel23)
+                        .addComponent(jLabel22)
+                        .addComponent(iStatusAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(iAlamatAnggota)
+                        .addComponent(iKelaminAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21)
+                        .addComponent(jLabel20)
+                        .addComponent(jLabel19)
+                        .addComponent(iTempatLahirAnggota)
+                        .addGroup(AnggotaMasterLayout.createSequentialGroup()
+                            .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(iIdAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel17))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel18)
+                                .addComponent(iNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(AnggotaMasterLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClearAnggota))
+                        .addComponent(iTanggalLahirAnggota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 102, Short.MAX_VALUE))
         );
         AnggotaMasterLayout.setVerticalGroup(
             AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -596,12 +603,12 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iNomorTeleponAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(AnggotaMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTambahAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -633,6 +640,11 @@ public class Dashboard extends javax.swing.JFrame {
         btnTambahTransaksi.setForeground(new java.awt.Color(255, 255, 255));
         btnTambahTransaksi.setText("TAMBAH");
         btnTambahTransaksi.setBorder(null);
+        btnTambahTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahTransaksiActionPerformed(evt);
+            }
+        });
 
         iHapusTransaksi.setBackground(new java.awt.Color(255, 0, 0));
         iHapusTransaksi.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
@@ -703,54 +715,67 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel29.setText("ID Film");
 
+        jLabel30.setText("Denda");
+
+        lIdDetailTransaksi.setText("ID Detail");
+
+        clearInputTransaksi.setText("Clear");
+
         javax.swing.GroupLayout TransaksiMasterLayout = new javax.swing.GroupLayout(TransaksiMaster);
         TransaksiMaster.setLayout(TransaksiMasterLayout);
         TransaksiMasterLayout.setHorizontalGroup(
             TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TransaksiMasterLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                        .addGap(0, 30, Short.MAX_VALUE)
                         .addComponent(iHapusTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(iEditTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))
-                    .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                        .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel28)
-                            .addComponent(jLabel26)
-                            .addComponent(jLabel25)
+                        .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel30)
+                        .addComponent(jLabel27)
+                        .addComponent(jLabel28)
+                        .addComponent(jLabel26)
+                        .addComponent(jLabel25)
+                        .addGroup(TransaksiMasterLayout.createSequentialGroup()
                             .addComponent(jLabel5)
-                            .addComponent(iKeteranganTransaksi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(iTanggalPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(iTanggalKembaliTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(iNamaAnggotaTransaksi)
-                            .addComponent(iFilmTransaksi)
-                            .addGroup(TransaksiMasterLayout.createSequentialGroup()
-                                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(iIdPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(iIdAnggotaTransaksi))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lIdDetailTransaksi)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                            .addComponent(clearInputTransaksi))
+                        .addComponent(iKeteranganTransaksi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel10)
+                        .addComponent(iTanggalPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(iTanggalKembaliTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(iNamaAnggotaTransaksi)
+                        .addComponent(iJudulFilmTransaksi)
+                        .addGroup(TransaksiMasterLayout.createSequentialGroup()
+                            .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(iIdPinjamTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                                .addComponent(jLabel6)
+                                .addComponent(iIdAnggotaTransaksi))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnCariTunggakan, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCariTunggakan, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel29)
-                                        .addComponent(iIdFilmTransaksi)))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabel29)
+                                    .addComponent(iIdFilmTransaksi))))
+                        .addComponent(iDendaTransaksi)))
+                .addGap(0, 102, Short.MAX_VALUE))
         );
         TransaksiMasterLayout.setVerticalGroup(
             TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TransaksiMasterLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jLabel5)
-                .addGap(11, 11, 11)
+                .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lIdDetailTransaksi)
+                    .addComponent(clearInputTransaksi))
+                .addGap(9, 9, 9)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel29))
@@ -771,7 +796,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iFilmTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(iJudulFilmTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(4, 4, 4)
@@ -784,12 +809,16 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iTanggalKembaliTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iDendaTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(TransaksiMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(iEditTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTambahTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iHapusTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout ContainerLayout = new javax.swing.GroupLayout(Container);
@@ -827,20 +856,20 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableDisplay1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout container2Layout = new javax.swing.GroupLayout(container2);
+        container2.setLayout(container2Layout);
+        container2Layout.setHorizontalGroup(
+            container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        container2Layout.setVerticalGroup(
+            container2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -851,12 +880,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(container2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addComponent(Form, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -866,8 +895,8 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Form, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(container2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 1320, 830));
@@ -1087,6 +1116,10 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_iIdFilmTransaksiActionPerformed
 
+    private void btnTambahTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTambahTransaksiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1142,10 +1175,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnTambahAnggota;
     private javax.swing.JButton btnTambahTransaksi;
     private javax.swing.JButton btnTransaksiPage;
+    private javax.swing.JButton clearInputTransaksi;
+    private javax.swing.JPanel container2;
     private javax.swing.JTextField iAlamatAnggota;
     private javax.swing.JTextField iAsalFilm;
+    private javax.swing.JTextField iDendaTransaksi;
     private javax.swing.JButton iEditTransaksi;
-    private javax.swing.JTextField iFilmTransaksi;
     private javax.swing.JTextField iGenreFilm;
     private javax.swing.JButton iHapusTransaksi;
     private javax.swing.JTextField iIdAnggota;
@@ -1153,6 +1188,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField iIdFilmTransaksi;
     private javax.swing.JTextField iIdPinjamTransaksi;
     private javax.swing.JTextField iJudulFilm;
+    private javax.swing.JTextField iJudulFilmTransaksi;
     private javax.swing.JComboBox<String> iKelaminAnggota;
     private javax.swing.JComboBox<String> iKeteranganTransaksi;
     private javax.swing.JTextField iKodeFilm;
@@ -1195,18 +1231,19 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private keeptoo.KGradientPanel kGradientPanel2;
+    private javax.swing.JLabel lIdDetailTransaksi;
     private javax.swing.JTable tableDisplay;
     private javax.swing.JTable tableDisplay1;
     // End of variables declaration//GEN-END:variables

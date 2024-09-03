@@ -17,6 +17,7 @@ import javaproject.utill.ConfigDB;
 import javax.swing.table.DefaultTableModel;
 import javaproject.utill.*;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,9 +26,9 @@ import javax.swing.JTextField;
  * @author itsly
  */
 public class TransaksiUtill {
-    String judulKolom[] = {"No", "ID Pinjam", "Kode Film", "Tanggal Pinjam", "Tanggal Kembali", "Status", "Keterangan", "Denda"};
+    String judulKolom[] = {"No", "ID Detail", "ID Pinjam", "Kode Film", "Tanggal Pinjam", "Tanggal Kembali", "Status", "Keterangan", "Denda"};
     String sqlView = "SELECT * FROM view_pinjam ORDER BY id_pinjam DESC";
-    int lebarKolom[] = {70, 120, 250, 110, 200, 120, 120, 120};
+    int lebarKolom[] = {70, 120, 120, 250, 110, 200, 120, 120, 120};
     DefaultTableModel list;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -37,7 +38,9 @@ public class TransaksiUtill {
     JTextField iIdFilmTransaksi;
     JTextField iIdPinjamTransaksi;
     JTextField iNamaAnggotaTransaksi;
+    JTextField iDendaTransaksi;
     JTextField iFilmTransaksi;
+    JLabel lIdDetailTransaksi;
     JComboBox iKeteranganTransaksi;
     JDateChooser iTanggalPinjamTransaksi;
     JDateChooser iTanggalKembaliTransaksi;
@@ -53,6 +56,8 @@ public class TransaksiUtill {
             JComboBox iKeteranganTransaksi,
             JDateChooser iTanggalPinjamTransaksi,
             JDateChooser iTanggalKembaliTransaksi,
+            JLabel lIdDetailTransaksi,
+            JTextField iDendaTransaksi,
             JTextField iSearch) {
         this.tableDisplayFirst = tableDisplayFirst;
         this.tableDisplaySecond = tableDisplaySecond;
@@ -64,6 +69,8 @@ public class TransaksiUtill {
         this.iKeteranganTransaksi = iKeteranganTransaksi;
         this.iTanggalPinjamTransaksi = iTanggalPinjamTransaksi;
         this.iTanggalKembaliTransaksi = iTanggalKembaliTransaksi;
+        this.iDendaTransaksi = iDendaTransaksi;
+        this.lIdDetailTransaksi = lIdDetailTransaksi;
         this.iSearch = iSearch;
         
         list = new DefaultTableModel();
@@ -92,6 +99,8 @@ public class TransaksiUtill {
         this.iKeteranganTransaksi.setSelectedItem(".:Pilih Data:.");
         this.iTanggalPinjamTransaksi.setDate(null);
         this.iTanggalKembaliTransaksi.setDate(null);
+        this.iDendaTransaksi.setText(null);
+        this.lIdDetailTransaksi.setText(null);
     }
     
     public void cariIdPeminjaman() {
@@ -119,7 +128,7 @@ public class TransaksiUtill {
         }
     }
     
-    public void simpanDataTransaksi() {
+    public void simpanDataPinjam() {
         try {
             if (this.iIdAnggotaTransaksi.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "ID Anggota belum terisi");
@@ -156,7 +165,13 @@ public class TransaksiUtill {
                 return;
             }
             
-            if (new ConfigDB().duplikasiData("tb_anggota", "id_anggota", this.iIdPinjamTransaksi.getText()) == true) {
+            if (this.iDendaTransaksi.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "keterangan belum dipilih");
+                this.iKeteranganTransaksi.requestFocus();
+                return;
+            }
+            
+            if (new ConfigDB().duplikasiData("tb_detail_pinjam", "id_detail_pinjam", this.iIdPinjamTransaksi.getText()) == true) {
                 JOptionPane.showMessageDialog(null, "ID Anggota sudah terdaftar");
                 return;
             }
@@ -177,75 +192,22 @@ public class TransaksiUtill {
         }
     }
     
-    public void ubahDataAnggota() {
+    public void prosesPeminjaman() {
         try {
-            if (
-                    this.iIdAnggota.getText().isEmpty() &&
-                    this.iNamaAnggota.getText().isEmpty() &&
-                    this.iTempatLahirAnggota.getText().isEmpty() &&
-                    this.iKelaminAnggota.getSelectedItem() == ".:Pilih Data:." &&
-                    this.iStatusAnggota.getSelectedItem() == ".:Pilih Data:." &&
-                    this.iAlamatAnggota.getText().isEmpty() &&
-                    this.iNomorTeleponAnggota.getText().isEmpty()
-                    ) {
-                JOptionPane.showMessageDialog(null, "Silahkan pilih data yang ingin diubah");
-                tableDisplay.requestFocus();
+            String tglPinjam = sdf.format(this.iTanggalPinjamTransaksi.getDate());
+            String tglKembali = sdf.format(this.iTanggalKembaliTransaksi.getDate());
+            if( this.iKeteranganTransaksi.getSelectedItem() == "Kembali") {
+                String SQLFirst = "UPDATE tb_detail_pinjam SET id_pinjam = '" + iIdPinjamTransaksi.getText() + "', kode_film = '" + iIdFilmTransaksi.getText() + "', tgl_pinjam='" + tglPinjam + "', tgl_kembali='" + tglKembali + "', status='1', keterangan='" + iKeteranganTransaksi.getSelectedItem() + "', denda='" + iDendaTransaksi.getText() + "' WHERE id_detail_pinjam = '" + lIdDetailTransaksi.getText() + "'";
+                new ConfigDB().ubahData(SQLFirst);
             } else {
-                // Tambahan cek apakah Kode tersebut tersedia atau tidak
-                if (new ConfigDB().cekId("tb_anggota", "id_anggota", this.iIdAnggota.getText()) == true) {
-                    String tgl = sdf.format(this.iTanggalLahirAnggota.getDate());
-                    System.out.print(tgl);
-                    String SQL = "UPDATE tb_anggota SET nama = '" + this.iNamaAnggota.getText() + 
-                        "', tempat_lahir = '" + this.iTempatLahirAnggota.getText() + 
-                        "', tgl_lahir = '" + tgl + 
-                        "', jkl = '" + String.valueOf(this.iKelaminAnggota.getSelectedItem()) + 
-                        "', status = '" + String.valueOf(this.iStatusAnggota.getSelectedItem()) + 
-                        "', alamat = '" + this.iAlamatAnggota.getText() + 
-                        "', telp = '" + this.iNomorTeleponAnggota.getText() + 
-                        "' WHERE id_anggota = '" + this.iIdAnggota.getText() + "'";
-                    new ConfigDB().ubahData(SQL);
-                    tampilTabelAnggota();
-                    clearInputAnggota();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Data film belum ditambahkan atau Kode Film salah");
-                    iIdAnggota.requestFocus();
-                }
+                String SQLSecond = "UPDATE tb_detail_pinjam SET id_pinjam = '" + iIdPinjamTransaksi.getText() + "', kode_film = '" + iIdFilmTransaksi.getText() + "', tgl_pinjam='" + tglPinjam + "', tgl_kembali='" + tglKembali + "', status='0', keterangan='" + iKeteranganTransaksi.getSelectedItem() + "', denda='" + iDendaTransaksi.getText() + "' WHERE id_detail_pinjam = '" + lIdDetailTransaksi.getText() + "'";
+                new ConfigDB().ubahData(SQLSecond);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian Ubah Data : \n [" + e.toString() + "]");
+            JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian Simpan Data : \n [" + e.toString() + "]");
         }
     }
-    
-    public void hapusDataAnggota() {
-        try {
-            if (
-                    this.iIdAnggota.getText().isEmpty() &&
-                    this.iNamaAnggota.getText().isEmpty() &&
-                    this.iTempatLahirAnggota.getText().isEmpty() &&
-                    this.iKelaminAnggota.getSelectedItem() == ".:Pilih Data:." &&
-                    this.iStatusAnggota.getSelectedItem() == ".:Pilih Data:." &&
-                    this.iAlamatAnggota.getText().isEmpty() &&
-                    this.iNomorTeleponAnggota.getText().isEmpty()
-                    ) {
-                JOptionPane.showMessageDialog(null, "Silahkan pilih data yang ingin diubah");
-                tableDisplay.requestFocus();
-            } else {
-                // Tambahan cek apakah Kode tersebut tersedia atau tidak
-                if (new ConfigDB().cekId("tb_anggota", "id_anggota", this.iIdAnggota.getText()) == true) {
-                    String SQL = "DELETE FROM tb_anggota WHERE id_anggota = '" + this.iIdAnggota.getText() + "'";
-                    new ConfigDB().hapusData(SQL);
-                    tampilTabelAnggota();
-                    clearInputAnggota();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Data film belum ditambahkan atau Kode Film salah");
-                    this.iIdAnggota.requestFocus();
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Maaf terjadi kesalahan pada bagian Hapus Data : \n [" + e.toString() + "]");
-        }
-    }
-    
+   
     public void mouseClickTransaksi(int baris) throws SQLException {
         this.iIdPinjamTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 1)));
         this.iIdFilmTransaksi.setText(String.valueOf(this.tableDisplayFirst.getValueAt(baris, 2)));
@@ -260,19 +222,19 @@ public class TransaksiUtill {
         Statement st = new ConfigDB().cn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM tb_pinjam WHERE id_pinjam='" + iIdPinjamTransaksi.getText() + "'");
         
-        //BELUM
         if(rs.next()) {
             iIdAnggotaTransaksi.setText(rs.getString("id_anggota"));
         }
-    }
-    
-    public void cariAnggota() {
-        try {
-            String SQL = "SELECT * FROM tb_anggota WHERE nama LIKE '%" + iSearch.getText() + "%'";
-            new ConfigDB().cariData(judulKolom, SQL, tableDisplay);
-            new ConfigDB().aturLebarKolom(this.tableDisplay, lebarKolom);
-        } catch (Exception e) {
-            System.out.print(e.toString());
+        
+        ResultSet ra = st.executeQuery("SELECT * FROM tb_anggota WHERE id_anggota='" + iIdAnggotaTransaksi.getText() + "'");
+        if(rs.next()) {
+            iNamaAnggotaTransaksi.setText(ra.getString("nama"));
+        }
+        
+        ResultSet rf = st.executeQuery("SELECT * FROM tb_film WHERE id_film='" + iIdFilmTransaksi.getText() + "'");
+        if(rs.next()) {
+            iFilmTransaksi.setText(rf.getString("judul"));
         }
     }
+   
 }
